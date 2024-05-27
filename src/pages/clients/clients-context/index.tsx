@@ -1,30 +1,33 @@
-import { createContext, Dispatch, useContext, useReducer } from 'react'
+import { createContext, Dispatch, useContext } from 'react'
 import { Client } from '../../../types/client'
 
 const initialState: Client[] = []
 type State = typeof initialState
 
 export const ACTION = {
-    Add: 'Add' as const,
+    ADD: 'ADD' as const,
     SET: 'SET' as const,
 }
-type AddAction = {
-    type: typeof ACTION.Add
+type ADDAction = {
+    type: typeof ACTION.ADD
     payload: Client
 }
 type SetAction = {
     type: typeof ACTION.SET
     payload: Client
 }
-type Action = AddAction | SetAction
+type Action = ADDAction | SetAction
 
 export function reducer(state: State, action: Action) {
     switch (action.type) {
-        case ACTION.Add:
+        case ACTION.ADD: {
             return [...state, action.payload]
+        }
         case ACTION.SET: {
             const id = action.payload.id
             const i = state.findIndex((c) => c.id == id)
+            console.log('state', state, action.payload)
+
             if (i === -1) {
                 return state
             }

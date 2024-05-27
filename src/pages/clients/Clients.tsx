@@ -11,9 +11,10 @@ function Clients() {
     const [ctx, dispatch] = useReducer(reducer, clients)
     const modalControlStateHook = useState(false)
     const targetClientStateHook = useState<Client>()
+
     const modalControl: ModalControl = useMemo(() => {
         const [state, setState] = modalControlStateHook
-        const [, setClient] = targetClientStateHook
+        const [client, setClient] = targetClientStateHook
         return {
             open: (client?: Client) => {
                 setState(true)
@@ -23,6 +24,7 @@ function Clients() {
                 setState(false)
                 setClient(undefined)
             },
+            client,
             isOpen: state,
         }
     }, [modalControlStateHook, targetClientStateHook])

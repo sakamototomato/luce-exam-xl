@@ -63,6 +63,7 @@ function Addresses() {
                                                 required
                                                 {...mapFormTextFieldProps(f)}
                                                 // name={field.name}
+                                                fullWidth
                                                 placeholder="Enter address"
                                             />
                                         </>

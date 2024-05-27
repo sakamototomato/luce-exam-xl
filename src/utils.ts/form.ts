@@ -7,6 +7,7 @@ type F = {
 }
 export const mapFormTextFieldProps = (f: F) => {
     return {
+        ...f.field,
         name: f.field.name,
         error: !!f.formState.errors.root?.message,
         helpertext: f.formState.errors.root?.message
@@ -16,6 +17,7 @@ export const mapFormTextFieldProps = (f: F) => {
 export const mapFormSelectProps = (f: F) => {
     return {
         // value: f.field.value,
+        ...f.field,
         name: f.field.name,
         error: !!f.formState.errors.root?.message,
         helpertext: f.formState.errors.root?.message

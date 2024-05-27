@@ -1,4 +1,11 @@
-import React, { ComponentProps, PropsWithChildren, useCallback } from 'react'
+import React, {
+    ComponentProps,
+    PropsWithChildren,
+    useCallback,
+    useEffect,
+    useId,
+    useRef,
+} from 'react'
 import PureModal from '../../../components/modal/PureModal'
 import { Client } from '../../../types/client'
 import PureButton from '../../../components/button/PureButton'
@@ -6,22 +13,23 @@ import Addresses from './fields.tsx/Addresses'
 import ContactPersons from './fields.tsx/ContactPersons'
 import BasicInformation from './fields.tsx/BasicInformation'
 import './ClientTableModal.scss'
-import { schema } from '@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FormProvider, useForm } from 'react-hook-form'
 import SubmitClientModalFormBtn from './SubmitClientModalFormBtn'
+import { ClientSchema } from './clientSchema'
+import { ACTION, useClientsContext } from '../clients-context'
 export type ModalControl = {
-    open: () => void
+    open: (client?: Client) => void
     close: () => void
     isOpen: boolean
+    client?: Client
 }
 interface IProps {
-    targetClient?: Client
     modalControl: ModalControl
 }
 enum EMode {
-    edit,
-    new,
+    edit = 'edit',
+    new = 'new',
 }
 
 function ClientTableModal(
@@ -30,22 +38,40 @@ function ClientTableModal(
     >
 ) {
     const { modalControl } = props
-    const mode = props.targetClient ? EMode.edit : EMode.new
-    const f = useForm<Client>({
-        mode: 'onSubmit',
-        reValidateMode: 'onSubmit',
-        resolver: yupResolver(schema),
+
+    const mode = modalControl?.client ? EMode.edit : EMode.new
+    const f = useForm({
+        name: 'client-form',
+        mode: 'all',
+        resolver: yupResolver(ClientSchema),
     })
 
-    const onSubmitHandler = useCallback((data: Client) => {
-        console.log('data', data)
-    }, [])
+    const [, dispatch] = useClientsContext()
+    const onSubmitHandler = useCallback(
+        (data: Client) => {
+            console.log('data', data, mode)
+            dispatch({
+                type: mode == EMode.new ? ACTION.ADD : ACTION.SET,
+                payload: data,
+            })
+            modalControl.close()
+        },
+        [mode, dispatch, modalControl.close]
+    )
     const closeModal = () => {
         modalControl.close()
         props?.onClose?.()
     }
 
-    console.log('ff', f.formState)
+    f.watch()
+    const uuid = useId()
+    const idRef = useRef(modalControl.client?.id || uuid)
+    useEffect(() => {
+        f.reset({ ...modalControl.client })
+        f.register('id', {
+            value: idRef.current,
+        })
+    }, [f, f.register, modalControl.client])
     return (
         <div className="client-table-modal">
             <PureModal
@@ -57,7 +83,7 @@ function ClientTableModal(
             >
                 <FormProvider {...f}>
                     <form
-                        // onSubmit={f.handleSubmit(onSubmitHandler)}
+                        onSubmit={f.handleSubmit(onSubmitHandler)}
                         className="client-modal-form"
                     >
                         <div className="grid-information ">

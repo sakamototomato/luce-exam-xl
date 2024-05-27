@@ -17,17 +17,15 @@ const ContactPersonSchema = Yup.object<ContactPerson>().shape({
         .required('Contact person name is required'),
     emailList: Yup.array()
         .of(Yup.string().email('Invalid email'))
-        .min(1, 'At least one email is required'),
+        .min(1, 'At least one email is required').required(),
     phoneList: Yup.array()
         .of(Yup.string()
             .matches(/^\+?\d+$/, 'Phone number must be a valid number'))
-        .min(1, 'At least one phone number is required')
+        .min(1, 'At least one phone number is required').required(),
 });
 
 export const ClientSchema = Yup.object<Client>().shape({
-    id: Yup.number()
-        .positive('ID must be a positive number')
-        .integer('ID must be an integer')
+    id: Yup.string()
         .required('ID is required'),
     name: Yup.string()
         .required('Client name is required'),
@@ -35,8 +33,8 @@ export const ClientSchema = Yup.object<Client>().shape({
         .oneOf([EClientType.Individual, EClientType.Enterprise], 'Invalid client type'),
     contactPersonList: Yup.array()
         .of(ContactPersonSchema)
-        .min(1, 'At least one contact person is required'),
+        .min(1, 'At least one contact person is required').required(),
     addressesList: Yup.array()
         .of(AddressSchema)
-        .min(1, 'At least one address is required')
+        .min(1, 'At least one address is required').required(),
 });

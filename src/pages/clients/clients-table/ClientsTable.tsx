@@ -2,7 +2,7 @@ import React from 'react'
 import { useClientsContext } from '../clients-context'
 import './ClientsTable.scss'
 import ClientTableModal, { ModalControl } from './ClientTableModal'
-import { FormProvider } from 'react-hook-form'
+import { Button } from '@mui/material'
 interface IProps {
     modalControl: ModalControl
 }
@@ -24,7 +24,16 @@ function ClientsTable(props: IProps) {
                     {clients.map((client) => {
                         return (
                             <tr key={client.id}>
-                                <td>{client.name}</td>
+                                <td>
+                                    <Button
+                                        onClick={() => {
+                                            props.modalControl.open(client)
+                                        }}
+                                        variant="text"
+                                    >
+                                        {client.name}
+                                    </Button>
+                                </td>
                                 <td>
                                     {client.contactPersonList?.map((p) => {
                                         return (

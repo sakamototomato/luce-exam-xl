@@ -11,3 +11,9 @@
 .icon-btn {
     cursor: pointer;
 }
+
+.row-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

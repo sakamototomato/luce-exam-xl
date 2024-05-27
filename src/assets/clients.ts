@@ -1,6 +1,6 @@
 import { Client, EClientType } from "../types/client";
 const enterpriseClient: Client = {
-    id: 1,
+    id: "1",
     name: "Tech Innovations Ltd.",
     type: EClientType.Enterprise,
     contactPersonList: [
@@ -21,7 +21,7 @@ const enterpriseClient: Client = {
     ]
 };
 const individualClient: Client = {
-    id: 2,
+    id: "2",
     name: "Emma Watson",
     type: EClientType.Individual,
     contactPersonList: [

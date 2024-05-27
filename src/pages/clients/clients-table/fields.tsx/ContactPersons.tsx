@@ -66,6 +66,7 @@ function ContactPersons() {
                                                 Name
                                             </InputLabel>
                                             <Input
+                                                fullWidth
                                                 required
                                                 {...mapFormTextFieldProps(f)}
                                                 placeholder="Enter contact name"
@@ -81,69 +82,86 @@ function ContactPersons() {
                                     const field = f.field
                                     return (
                                         <>
-                                            {field.value.map(
+                                            {field?.value?.map(
                                                 (email, emailIndex) => {
                                                     return (
-                                                        <div
-                                                            className="email-item"
+                                                        <Controller
                                                             key={emailIndex}
-                                                        >
-                                                            <InputLabel
-                                                                required
-                                                                id={`contactPersonList.${personIndex}.emailList.${emailIndex}`}
-                                                            >
-                                                                Email
-                                                            </InputLabel>
-                                                            <Input
-                                                                required
-                                                                // {...field}
-                                                                {...mapFormTextFieldProps(
-                                                                    f
-                                                                )}
-                                                                placeholder="Enter email address"
-                                                            />
-                                                            {emailIndex ===
-                                                            0 ? (
-                                                                <PureButton
-                                                                    cssType="link"
-                                                                    disabled={
-                                                                        field
-                                                                            .value
-                                                                            ?.length ===
-                                                                        2
-                                                                    }
-                                                                    onClick={() => {
-                                                                        setValue(
-                                                                            `contactPersonList.${personIndex}.emailList`,
-                                                                            [
-                                                                                ...field.value,
-                                                                                '',
-                                                                            ]
-                                                                        )
-                                                                    }}
-                                                                >
-                                                                    Add Other
-                                                                </PureButton>
-                                                            ) : (
-                                                                <DeleteIcon
-                                                                    type="trash"
-                                                                    onClick={() => {
-                                                                        const temp =
-                                                                            [
-                                                                                ...field.value,
-                                                                            ]
-                                                                        temp.splice(
-                                                                            emailIndex,
-                                                                            1
-                                                                        )
-                                                                        setValue(
-                                                                            `contactPersonList.${personIndex}.emailList`,
-                                                                            temp
-                                                                        )
-                                                                    }}
-                                                                ></DeleteIcon>
-                                                            )}
-                                                        </div>
+                                                            control={control}
+                                                            name={`${field.name}.${emailIndex}`}
+                                                            render={(
+                                                                emailField
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="email-item"
+                                                                        key={
+                                                                            emailIndex
+                                                                        }
+                                                                    >
+                                                                        <InputLabel
+                                                                            required
+                                                                            id={`contactPersonList.${personIndex}.emailList.${emailIndex}`}
+                                                                        >
+                                                                            Email
+                                                                        </InputLabel>
+                                                                        <div className="row-between">
+                                                                            <Input
+                                                                                fullWidth
+                                                                                required
+                                                                                // {...field}
+                                                                                {...mapFormTextFieldProps(
+                                                                                    emailField
+                                                                                )}
+                                                                                placeholder="Enter email address"
+                                                                            />
+                                                                            {emailIndex ===
+                                                                            0 ? (
+                                                                                <PureButton
+                                                                                    cssType="link"
+                                                                                    disabled={
+                                                                                        field
+                                                                                            .value
+                                                                                            ?.length ===
+                                                                                        2
+                                                                                    }
+                                                                                    onClick={() => {
+                                                                                        setValue(
+                                                                                            `contactPersonList.${personIndex}.emailList`,
+                                                                                            [
+                                                                                                ...field.value,
+                                                                                                '',
+                                                                                            ]
+                                                                                        )
+                                                                                    }}
+                                                                                >
+                                                                                    Add
+                                                                                    Other
+                                                                                </PureButton>
+                                                                            ) : (
+                                                                                <DeleteIcon
+                                                                                    type="trash"
+                                                                                    onClick={() => {
+                                                                                        const temp =
+                                                                                            [
+                                                                                                ...field.value,
+                                                                                            ]
+                                                                                        temp.splice(
+                                                                                            emailIndex,
+                                                                                            1
+                                                                                        )
+                                                                                        setValue(
+                                                                                            `contactPersonList.${personIndex}.emailList`,
+                                                                                            temp
+                                                                                        )
+                                                                                    }}
+                                                                                ></DeleteIcon>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }}
+                                                        ></Controller>
                                                     )
                                                 }
                                             )}
@@ -161,70 +179,84 @@ function ContactPersons() {
                                             {field.value.map(
                                                 (phone, phoneIndex) => {
                                                     return (
-                                                        <div
-                                                            className="email-item"
+                                                        <Controller
                                                             key={phoneIndex}
-                                                        >
-                                                            <InputLabel
-                                                                required
-                                                                id={`contactPersonList.${personIndex}.phoneList.${phoneIndex}`}
-                                                            >
-                                                                Phone Number
-                                                            </InputLabel>
-                                                            <Input
-                                                                required
-                                                                // {...field}
-                                                                {...mapFormTextFieldProps(
-                                                                    f
-                                                                )}
-                                                                placeholder="Enter phone number"
-                                                            />
-                                                            {phoneIndex ===
-                                                            0 ? (
-                                                                <PureButton
-                                                                    cssType="link"
-                                                                    disabled={
-                                                                        field
-                                                                            .value
-                                                                            ?.length ===
-                                                                        2
-                                                                    }
-                                                                    onClick={() => {
-                                                                        setValue(
-                                                                            `contactPersonList.${personIndex}.phoneList`,
-                                                                            [
-                                                                                ...field.value,
-                                                                                '',
-                                                                            ]
-                                                                        )
-                                                                    }}
-                                                                >
-                                                                    Add Other
-                                                                </PureButton>
-                                                            ) : (
-                                                                <DeleteIcon
-                                                                    type="trash"
-                                                                    onClick={() => {
-                                                                        const temp =
-                                                                            [
-                                                                                ...field.value,
-                                                                            ]
-                                                                        temp.splice(
-                                                                            phoneIndex,
-                                                                            1
-                                                                        )
-                                                                        console.log(
-                                                                            'temp',
-                                                                            temp
-                                                                        )
-                                                                        setValue(
-                                                                            `contactPersonList.${personIndex}.phoneList`,
-                                                                            temp
-                                                                        )
-                                                                    }}
-                                                                ></DeleteIcon>
-                                                            )}
-                                                        </div>
+                                                            control={control}
+                                                            name={`${field.name}.${phoneIndex}`}
+                                                            render={(
+                                                                phoenField
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="email-item"
+                                                                        key={
+                                                                            phoneIndex
+                                                                        }
+                                                                    >
+                                                                        <InputLabel
+                                                                            required
+                                                                            id={`contactPersonList.${personIndex}.phoneList.${phoneIndex}`}
+                                                                        >
+                                                                            Phone
+                                                                            Number
+                                                                        </InputLabel>
+                                                                        <div className="row-between">
+                                                                            <Input
+                                                                                required
+                                                                                fullWidth
+                                                                                {...mapFormTextFieldProps(
+                                                                                    phoenField
+                                                                                )}
+                                                                                placeholder="Enter phone number"
+                                                                            />
+                                                                            {phoneIndex ===
+                                                                            0 ? (
+                                                                                <PureButton
+                                                                                    cssType="link"
+                                                                                    disabled={
+                                                                                        field
+                                                                                            .value
+                                                                                            ?.length ===
+                                                                                        2
+                                                                                    }
+                                                                                    onClick={() => {
+                                                                                        setValue(
+                                                                                            `contactPersonList.${personIndex}.phoneList`,
+                                                                                            [
+                                                                                                ...field.value,
+                                                                                                '',
+                                                                                            ]
+                                                                                        )
+                                                                                    }}
+                                                                                >
+                                                                                    Add
+                                                                                    Other
+                                                                                </PureButton>
+                                                                            ) : (
+                                                                                <DeleteIcon
+                                                                                    type="trash"
+                                                                                    onClick={() => {
+                                                                                        const temp =
+                                                                                            [
+                                                                                                ...field.value,
+                                                                                            ]
+                                                                                        temp.splice(
+                                                                                            phoneIndex,
+                                                                                            1
+                                                                                        )
+
+                                                                                        setValue(
+                                                                                            `contactPersonList.${personIndex}.phoneList`,
+                                                                                            temp
+                                                                                        )
+                                                                                    }}
+                                                                                ></DeleteIcon>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }}
+                                                        />
                                                     )
                                                 }
                                             )}

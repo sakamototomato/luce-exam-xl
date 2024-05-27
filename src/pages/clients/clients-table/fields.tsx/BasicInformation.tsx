@@ -33,7 +33,7 @@ function BasicInformation() {
                     }}
                 />
                 <Controller
-                    name="name"
+                    name="type"
                     control={control}
                     render={(f) => {
                         return (
@@ -53,8 +53,8 @@ function BasicInformation() {
                                     }}
                                     placeholder="Select"
                                 >
-                                    <option value={EClientType.Enterprise}>
-                                        {EClientType.Enterprise}
+                                    <option value={EClientType.na}>
+                                        {EClientType.na}
                                     </option>
                                     <option value={EClientType.Enterprise}>
                                         {EClientType.Enterprise}

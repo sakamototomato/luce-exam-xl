@@ -6,13 +6,23 @@
     gap: 10px;
     border-radius: 4px 0px 0px 0px;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
     background: var(--bg-gray-blue);
+    --disabled-white: #d4d4d4;
+    flex-wrap: nowrap;
+    text-wrap: nowrap;
 
     button {
         outline: none;
         background: transparent;
         border: none;
+    }
+
+    &.primary.disabled {
+
+        button {
+            color: var(--disabled-white);
+        }
     }
 
     &.secondary {
@@ -38,24 +48,30 @@
             color: var(--color);
         }
 
-        &.disabled {
-            background: transparent;
-            --color: #DBDBDB;
-        }
-
-
         &::after {
             color: var(--color);
             content: "+";
             display: inline-block;
             margin-left: 8px;
         }
+
+        &.disabled {
+            background: transparent;
+            --color: var(--disabled-white);
+
+            &::after {
+                color: var(-disabled-white);
+            }
+
+        }
+
+
+
     }
 
     &.disabled {
         background: #EDF1F4;
         pointer-events: none;
         cursor: auto;
-        color: #464545;
     }
 }

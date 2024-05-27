@@ -1,6 +1,6 @@
 
 export type Client = {
-    id: number;
+    id: string;
     name: string;
     type: EClientType;
     contactPersonList: ContactPerson[];
