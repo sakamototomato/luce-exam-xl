@@ -1,18 +1,16 @@
 import React from 'react'
 import { useClientsContext } from '../clients-context'
 import './ClientsTable.scss'
-import ClientTableModal from './ClientTableModal'
-import { schema } from '@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { FormProvider, useForm } from 'react-hook-form'
-function ClientsTable() {
+import ClientTableModal, { ModalControl } from './ClientTableModal'
+import { FormProvider } from 'react-hook-form'
+interface IProps {
+    modalControl: ModalControl
+}
+function ClientsTable(props: IProps) {
     const [clients] = useClientsContext()
-    const f = useForm({
-        resolver: yupResolver(schema),
-    })
 
     return (
-        <FormProvider {...f}>
+        <>
             <table className="clients-table">
                 <thead>
                     <tr>
@@ -30,14 +28,11 @@ function ClientsTable() {
                                 <td>
                                     {client.contactPersonList?.map((p) => {
                                         return (
-                                            <div
-                                                className="person"
-                                                key={p.name}
-                                            >
+                                            <React.Fragment key={p.name}>
                                                 <p>{p.name}</p>
                                                 <p>{p.emailList?.[0]}</p>
                                                 <p>{p.phoneList?.[0]}</p>
-                                            </div>
+                                            </React.Fragment>
                                         )
                                     })}
                                 </td>
@@ -47,14 +42,12 @@ function ClientsTable() {
                         )
                     })}
                 </tbody>
-                <ClientTableModal>
-                    <form
-                        onSubmit={f.handleSubmit(onSubmitHandler)}
-                        className="client-modal-form"
-                    ></form>
-                </ClientTableModal>
             </table>
-        </FormProvider>
+
+            <ClientTableModal
+                modalControl={props.modalControl}
+            ></ClientTableModal>
+        </>
     )
 }
 

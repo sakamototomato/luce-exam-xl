@@ -20,6 +20,7 @@ export type Address = {
 }
 
 export enum EClientType {
+    na = "N/A",
     Enterprise = "Enterprise",
     Individual = "Individual"
 }

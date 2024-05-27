@@ -32,7 +32,7 @@ export const ClientSchema = Yup.object<Client>().shape({
     name: Yup.string()
         .required('Client name is required'),
     type: Yup.mixed<EClientType>()
-        .oneOf(Object.values(EClientType), 'Invalid client type'),
+        .oneOf([EClientType.Individual, EClientType.Enterprise], 'Invalid client type'),
     contactPersonList: Yup.array()
         .of(ContactPersonSchema)
         .min(1, 'At least one contact person is required'),

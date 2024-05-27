@@ -1,0 +1,43 @@
+.grid-information {
+    width: 1054px;
+    display: flex;
+    gap: 30px;
+    max-height: 750px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &>div {
+        flex: 1;
+        gap: 30px;
+    }
+}
+
+.fields-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .fields-group-title {
+        display: flex;
+        justify-content: space-between;
+        //styleName: body / XL;
+        font-family: Roboto;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        text-align: left;
+
+    }
+}
+
+.modal-footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.fields-group-content {
+    display: flex;
+    gap: 16px;
+}
