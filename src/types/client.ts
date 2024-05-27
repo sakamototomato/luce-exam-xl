@@ -3,18 +3,15 @@ export type Client = {
     id: number;
     name: string;
     type: EClientType;
-    contactName: string;
-    emailList: string[];
-    phoneList: Phone[];
+    contactPersonList: ContactPerson[];
     addressesList: Address[]
 }
 
 
-
-export type Phone = {
-    val: number
-    prefix: number
-
+export type ContactPerson = {
+    name: string;
+    emailList: string[];
+    phoneList: string[];
 }
 export type Address = {
     postalCode: number;
