@@ -1,13 +1,18 @@
-import React, { PropsWithChildren } from 'react'
 import Header from './Header'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 function Layout() {
+    const location = useLocation()
     return (
         <main>
             <Header />
             <section>
                 <Outlet />
+                {location.pathname === '/' && (
+                    <>
+                        <Link to={'clients'}>go to clients</Link>
+                    </>
+                )}
             </section>
         </main>
     )
