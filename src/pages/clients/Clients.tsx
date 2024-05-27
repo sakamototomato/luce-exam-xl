@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useState } from 'react'
+import React, { useMemo, useReducer, useRef, useState } from 'react'
 import PureButton from '../../components/button/PureButton'
 import './Client.scss'
 import ClientsTable from './clients-table/ClientsTable'
@@ -15,10 +15,27 @@ function Clients() {
     const modalControl: ModalControl = useMemo(() => {
         const [state, setState] = modalControlStateHook
         const [client, setClient] = targetClientStateHook
+
         return {
-            open: (client?: Client) => {
+            open: (c?: Client) => {
+                console.log('client', c)
+
+                const temp = c ?? {
+                    type: '',
+                    name: '',
+                    contactPersonList: [
+                        {
+                            name: '',
+                            emailList: [''],
+                            phoneList: [''],
+                        },
+                    ],
+                    addressesList: [{}],
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                }
+                console.log('temp', temp)
+                setClient(temp)
                 setState(true)
-                setClient(client || undefined)
             },
             close: () => {
                 setState(false)
@@ -34,7 +51,7 @@ function Clients() {
                 <div className="clients-operation">
                     <PureButton
                         text={'Add New Client'}
-                        onClick={modalControl.open}
+                        onClick={() => modalControl.open()}
                     />
                 </div>
                 <ClientsTable modalControl={modalControl} />

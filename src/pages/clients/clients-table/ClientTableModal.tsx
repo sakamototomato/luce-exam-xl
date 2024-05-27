@@ -3,7 +3,6 @@ import React, {
     PropsWithChildren,
     useCallback,
     useEffect,
-    useId,
     useRef,
 } from 'react'
 import PureModal from '../../../components/modal/PureModal'
@@ -38,8 +37,7 @@ function ClientTableModal(
     >
 ) {
     const { modalControl } = props
-
-    const mode = modalControl?.client ? EMode.edit : EMode.new
+    const mode = modalControl?.client?.id ? EMode.edit : EMode.new
     const f = useForm({
         name: 'client-form',
         mode: 'all',
@@ -49,7 +47,6 @@ function ClientTableModal(
     const [, dispatch] = useClientsContext()
     const onSubmitHandler = useCallback(
         (data: Client) => {
-            console.log('data', data, mode)
             dispatch({
                 type: mode == EMode.new ? ACTION.ADD : ACTION.SET,
                 payload: data,
@@ -63,15 +60,22 @@ function ClientTableModal(
         props?.onClose?.()
     }
 
-    f.watch()
-    const uuid = useId()
-    const idRef = useRef(modalControl.client?.id || uuid)
+    const uuid = useRef(new Date().getTime()).current + ''
+    const id = modalControl.client?.id || uuid
+    console.log('id', id)
     useEffect(() => {
         f.reset({ ...modalControl.client })
+
         f.register('id', {
-            value: idRef.current,
+            value: id,
         })
-    }, [f, f.register, modalControl.client])
+
+        return () => {
+            f.reset({})
+            f.unregister()
+        }
+    }, [f, f.reset, f.register, modalControl.client, id])
+
     return (
         <div className="client-table-modal">
             <PureModal

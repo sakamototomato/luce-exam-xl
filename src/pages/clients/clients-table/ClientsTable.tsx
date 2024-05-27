@@ -26,6 +26,7 @@ function ClientsTable(props: IProps) {
                             <tr key={client.id}>
                                 <td>
                                     <Button
+                                        type="button"
                                         onClick={() => {
                                             props.modalControl.open(client)
                                         }}
@@ -46,7 +47,7 @@ function ClientsTable(props: IProps) {
                                     })}
                                 </td>
                                 <td>{client.type}</td>
-                                <td>{client.addressesList?.[0].val}</td>
+                                <td>{client.addressesList?.[0]?.val}</td>
                             </tr>
                         )
                     })}

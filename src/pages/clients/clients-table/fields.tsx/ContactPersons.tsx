@@ -7,21 +7,19 @@ import DeleteIcon from '../../../../components/button/DeleteIconBtn'
 import './ContactPersons.scss'
 import { mapFormTextFieldProps } from '../../../../utils.ts/form'
 function ContactPersons() {
-    const { watch, getValues, setValue, control } = useFormContext<Client>()
+    const { watch, setValue, control } = useFormContext<Client>()
     const contacts = watch('contactPersonList') || []
     const addContactPerson = () => {
-        const tempContactPersonList = [
-            ...(getValues('contactPersonList') || []),
-        ]
-        tempContactPersonList.push({
+        const temp = [...contacts]
+        temp.push({
             name: '',
             emailList: [''],
             phoneList: [''],
         })
-        setValue('contactPersonList', tempContactPersonList)
+        setValue('contactPersonList', temp)
     }
     const deleteContact = (index: number) => {
-        const temp = [...(getValues('contactPersonList') || [])]
+        const temp = [...contacts]
         temp.splice(index, 1)
         setValue('contactPersonList', temp)
     }
@@ -176,7 +174,7 @@ function ContactPersons() {
                                     const { field } = f
                                     return (
                                         <>
-                                            {field.value.map(
+                                            {field.value?.map?.(
                                                 (phone, phoneIndex) => {
                                                     return (
                                                         <Controller

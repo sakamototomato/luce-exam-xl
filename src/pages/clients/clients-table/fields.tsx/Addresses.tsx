@@ -1,17 +1,17 @@
 import { InputLabel, Input, FormControlLabel, Checkbox } from '@mui/material'
 import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Address, Client } from '../../../../types/client'
+import { Client } from '../../../../types/client'
 import PureButton from '../../../../components/button/PureButton'
 import DeleteIcon from '../../../../components/button/DeleteIconBtn'
 import { mapFormTextFieldProps } from '../../../../utils.ts/form'
 
 function Addresses() {
-    const { control, watch, setValue, getValues } = useFormContext<Client>()
+    const { control, watch, setValue } = useFormContext<Client>()
     const addresses = watch('addressesList') || []
 
     const addAnotherAddress = () => {
-        const tempAddresses = [...(getValues('addressesList') || [])]
+        const tempAddresses = [...addresses]
         tempAddresses.push({
             postalCode: 0,
             isDefault: false,
@@ -21,7 +21,7 @@ function Addresses() {
     }
 
     const deleteAddress = (index: number) => {
-        const tempAddresses = [...(getValues('addressesList') || [])]
+        const tempAddresses = [...addresses]
         tempAddresses.splice(index, 1)
         setValue('addressesList', tempAddresses)
     }
